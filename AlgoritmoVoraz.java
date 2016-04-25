@@ -15,12 +15,12 @@ public class AlgoritmoVoraz extends Algoritmo{
     public AlgoritmoVoraz(Problema problema){
     
         super(problema);
-        for(int i = 0; i < solucion.getNodosVisitados().length; i++)
-            solucion.setVisitado(i, true);
+        for(int i = 0; i < getSolucion().getNodosVisitados().length; i++)
+            getSolucion().setVisitado(i, true);
         
     }
 
-    public void voraz(){
+    public void ejecutar(){
     
         ArrayList<Integer> s = solucionInicial();
         ArrayList<Integer> s1 = new ArrayList<Integer>();

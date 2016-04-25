@@ -14,11 +14,13 @@ import java.util.ArrayList;
 public class Algoritmo {
     
     private final Problema problema;
-    Solucion solucion;
+    private Solucion solucion;
+    private Clock reloj;
     
     public Algoritmo(Problema problema){
         this.problema = problema;
         solucion = new Solucion(problema.getnNodos());
+        reloj = new Clock();
     }
     
     public void ejecutar(){}
@@ -114,7 +116,34 @@ public class Algoritmo {
             System.out.print(vector.get(i) + " ");
     }
     
+    public ArrayList<Integer> getVecinos(ArrayList<Integer> vector){
+        ArrayList<Integer> aux = new ArrayList<Integer>();
+        for(int i = 0; i < getProblema().getnNodos(); i++)
+            if(!vector.contains(i))
+                aux.add(i);
+        return aux;
+    }
+    
+    public int obtenerArista(ArrayList<Integer> vector1, ArrayList<Integer> vector2 ){
+        double maxMd = md(vector1);
+        int nodo = -1;
+        
+        
+        for(int i = 0; i < vector2.size(); i++){
+            if(!vector1.contains(vector2.get(i))){
+                vector1.add(vector2.get(i));
+                if(maxMd <  md(vector1)){
+                    maxMd = md(vector1);
+                    nodo = vector2.get(i);
+                }
+                vector1.remove(vector1.size() - 1);
+            }
+        }
+        return nodo;
+    }
+    
     public void mostrar(){
+        System.out.println("Numero de nodos = " + getProblema().getnNodos());
         getSolucion().mostrarSolucion();
     }
     
@@ -128,6 +157,14 @@ public class Algoritmo {
 
     public void setSolucion(Solucion solucion) {
         this.solucion = solucion;
+    }
+
+    public Clock getReloj() {
+        return reloj;
+    }
+
+    public void setReloj(Clock reloj) {
+        this.reloj = reloj;
     }
     
 }

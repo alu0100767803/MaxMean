@@ -1,6 +1,8 @@
 
 package MaxMean;
 
+import java.util.ArrayList;
+
 /**
  * @author Jorge
  * E-mail: alu0100767803@ull.edu.es
@@ -27,11 +29,24 @@ public class Solucion {
      * Metodo que imprime la solucion del algoritmo
      */
     public void mostrarSolucion(){
-        System.out.print(" {");
+        System.out.print("Subgrafo solucion = {");
         for(int i = 0; i < getNodosVisitados().length; i++)
             if(isVisitado(i))
                 System.out.print(" " + i);
-        System.out.print(" } ");
+        System.out.println(" } ");
+        System.out.println("Coste total = " + getCoste());
+        System.out.println("md = " + getMd());
+    }
+    
+    public void reiniciar(){
+        for(int i = 0; i < getNodosVisitados().length; i++)
+            setVisitado(i, false);
+    }
+    
+    public void iniciar(ArrayList<Integer> vector){
+        for(int i = 0; i < vector.size(); i++){
+            setVisitado(vector.get(i), true);
+        }
     }
     
     public boolean[] getNodosVisitados() {

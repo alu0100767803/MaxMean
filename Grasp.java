@@ -17,9 +17,9 @@ public class Grasp extends Algoritmo {
         super(problema);
     }
     
-    public void grasp(){
+    public void ejecutar(){
         
-        ArrayList<Integer> s = solucionInicial();
+        ArrayList<Integer> s = construirSolucion();
         ArrayList<Integer> s1 = new ArrayList();
         for(int i = 0; i < s.size(); i++)
             getSolucion().setVisitado(s.get(i), true);
@@ -29,7 +29,7 @@ public class Grasp extends Algoritmo {
         while(!sonIguales(s, s1)){
             
              s1 = igualar(s);
-             nodoCandidato = obtenerMaxMd(s);
+             nodoCandidato = obtenerNodo(s);
              if(nodoCandidato != -1){
                  s.add(nodoCandidato);
                  if(md(s) > md(s1)){
@@ -37,6 +37,8 @@ public class Grasp extends Algoritmo {
                      getSolucion().setCoste(obtenerCoste(s));
                      getSolucion().setMd(md(s));
                  }
+                 else 
+                     s.remove(s.size() - 1);
              }
         }  
     }
@@ -46,7 +48,7 @@ public class Grasp extends Algoritmo {
      * Obtiene una solucion inicial, que será la primera arista positiva que encuentre
      * @return 
      */
-    public ArrayList<Integer> solucionInicial(){
+    public ArrayList<Integer> construirSolucion(){
         ArrayList<ArrayList<Integer>> vector = new ArrayList<ArrayList<Integer>>();         
             
             /*double valorActual = Double.NEGATIVE_INFINITY;
@@ -104,14 +106,22 @@ public class Grasp extends Algoritmo {
                     }
             }
             
-            int aleatorio = (int) (Math.random()*vector.size());
-            int k = 3;
+            int aleatorio = (int) (Math.random() * vector.size());
+            /*int k = 3;
             for(int i = 0; i < k; i++){
                 aleatorio = (int) (Math.random()*vector.size());
                 
-            }
+            }*/
             return vector.get(aleatorio);
         
+    }
+    
+    public int obtenerNodo(ArrayList<Integer> vector){
+        ArrayList<Integer> aux = getVecinos(vector);
+        ArrayList<Integer> nodosMayores = new ArrayList();
+        
+        int aleatorio = (int) (Math.random() * aux.size() - 1);
+        return aux.get(aleatorio);
     }
     
 }

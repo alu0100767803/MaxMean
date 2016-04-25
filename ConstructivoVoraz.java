@@ -19,12 +19,18 @@ public class ConstructivoVoraz  extends Algoritmo{
     /**
      * Metodo que realiza el algoritmo constructivo voraz 
      */
-    public void voraz(){
+    public void ejecutar(){
         
         ArrayList<Integer> s = aristaMayor();
         ArrayList<Integer> s1 = new ArrayList();
         int nodoCandidato;
+        
+        int ejecucion = 0;      //
+        System.out.println("Ejecucion = " + ejecucion);
+        System.out.println("Md = " + md(s));
         while(!sonIguales(s, s1)){
+            ejecucion++;
+            getReloj().start();
             
              s1 = igualar(s);
              nodoCandidato = obtenerMaxMd(s);
@@ -36,6 +42,10 @@ public class ConstructivoVoraz  extends Algoritmo{
                      getSolucion().setMd(md(s));
                  }
              }
+             System.out.println("Ejecucion = " + ejecucion);
+             System.out.println("Md = " + md(s));
+             getReloj().stop();
+             // System.out.println("Tiempo = " + getReloj().eslapsedTime() + "milisegundos");
         }  
     }
     

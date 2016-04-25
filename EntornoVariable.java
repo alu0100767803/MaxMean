@@ -10,7 +10,7 @@ import java.util.Stack;
  */
 public class EntornoVariable extends Algoritmo{
     
-    private final int kMax = 2;
+    private final int kMax = 3;
     
     public EntornoVariable(Problema problema){
         super(problema);
@@ -18,16 +18,78 @@ public class EntornoVariable extends Algoritmo{
     
     public void ejecutar(){
         int k = 0;
-        Stack<Integer> pila = new Stack<Integer>();
-        ArrayList<Integer> s = aristaMayor();
+        ArrayList<Integer> todosLosNodos = new ArrayList();
+        for(int i = 0; i < getSolucion().getNodosVisitados().length; i++)
+            todosLosNodos.add(i);
+        
+        ArrayList<Integer> s = aleatorio(todosLosNodos);
         ArrayList<Integer> vecinos = getVecinos(s);
         ArrayList<Integer> s1 = new ArrayList<Integer>();
         int nodoCandidato;
+        int operacion;
+        int nodoAEliminar;
         
         while(k < getkMax()){
-           s1 = aleatorio(vecinos); 
-           nodoCandidato = obtenerArista(s1, vecinos);
-           if(nodoCandidato != -1){
+           s1 = igualar(s);
+           vecinos = getVecinos(s);
+           nodoCandidato = nodoAleatorio(vecinos);
+           operacion = (int) (Math.random() * 3);
+            mostrarArrayList(s);
+            System.out.println();
+            mostrarArrayList(vecinos);
+           System.out.println();
+           if(operacion == 0){
+               s.add(nodoCandidato);
+               if(md(s) > md(s1)){
+                   System.out.println("Nodo a añadir = " + nodoCandidato);
+                    getSolucion().setVisitado(nodoCandidato, true);
+                    getSolucion().setCoste(obtenerCoste(s));
+                    getSolucion().setMd(md(s));
+                    k = 0;
+                    System.out.println("Estoy añadiendo");
+               }
+               else{
+                  k++;
+                  s.remove(s.size() - 1);
+               }
+           }
+           else if(operacion == 1){
+               nodoAEliminar = (int) (Math.random() * s.size() - 1);
+               System.out.println("Nodo a eliminar = " + s.get(nodoAEliminar));
+               s.remove(nodoAEliminar);
+               s.add(nodoCandidato);
+               if(md(s) > md(s1)){
+                  
+                  getSolucion().reiniciar();
+                  getSolucion().iniciar(s);
+                  getSolucion().setCoste(obtenerCoste(s));
+                  getSolucion().setMd(md(s)); 
+                  k = 0;
+                  System.out.println("Estoy intercambiando");
+                  
+               }
+               else{
+                   k++;
+                   s = igualar(s1);
+               }
+           }
+           else if(operacion == 2){
+               nodoAEliminar = (int) (Math.random() * s.size() - 1);
+               s.remove(nodoAEliminar);
+               if(md(s) > md(s1)){
+                   getSolucion().setVisitado(nodoAEliminar, false);
+                   getSolucion().setCoste(obtenerCoste(s));
+                   getSolucion().setMd(md(s));
+                   k = 0;
+                   System.out.println("Estoy eliminando");
+               }
+               else{
+                   k++;
+                   s = igualar(s1);
+               }
+           }
+           
+           /*if(nodoCandidato != -1){
                s1.add(nodoCandidato);
                if(md(s1) > md(s)){
                    s = igualar(s1);
@@ -36,7 +98,7 @@ public class EntornoVariable extends Algoritmo{
                else
                    k++;
                
-           }
+           }*/
             
           
         }
@@ -66,30 +128,15 @@ public class EntornoVariable extends Algoritmo{
             
         }*/
     }
-    
-    public int obtenerArista(ArrayList<Integer> vector1, ArrayList<Integer> vector2 ){
-        double maxMd = md(vector1);
-        int nodo = -1;
-        
-        
-        for(int i = 0; i < vector2.size(); i++){
-            if(!vector1.contains(vector2.get(i))){
-                vector1.add(vector2.get(i));
-                if(maxMd <  md(vector1)){
-                    maxMd = md(vector1);
-                    nodo = vector2.get(i);
-                }
-                vector1.remove(vector1.size() - 1);
-            }
-        }
-        return nodo;
-    }
-        
-   
      
+    public int nodoAleatorio(ArrayList<Integer> vector){
+        int aleatorio = (int) (Math.random() * vector.size() - 1);
+        return vector.get(aleatorio);
+        
+    }
     
-            
     public ArrayList<Integer> aleatorio(ArrayList<Integer> vector){
+        
         ArrayList<Integer> aux = new ArrayList<Integer>();
         Stack<Integer> pila = new Stack<Integer>();
         int nodo1 = (int) (Math.random() * vector.size());
@@ -103,14 +150,6 @@ public class EntornoVariable extends Algoritmo{
         aux.add(nodo1);
         aux.add(nodo2);
         
-        return aux;
-    }
-    
-    public ArrayList<Integer> getVecinos(ArrayList<Integer> vector){
-        ArrayList<Integer> aux = new ArrayList<Integer>();
-        for(int i = 0; i < getProblema().getnNodos(); i++)
-            if(!vector.contains(i))
-                aux.add(i);
         return aux;
     }
 
