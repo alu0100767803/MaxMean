@@ -2,37 +2,20 @@
 package MaxMean;
 
 /**
- * @author Jorge
+ * @author Jorge Alonso Hernandez
  * E-mail: alu0100767803@ull.edu.es
- * Fecha: 13/03/2016
- * Asignatura: Programaci�n de Aplicaciones Interactivas
- * Version: 1
+ * Fecha: 19/04/2016
+ * Asignatura: Diseño y Analisis de Algoritmos
  * Comentario: Clase que implementa un reloj de ejecución
  */
 public class Clock {
 
-        private long inicio;
-        private long fin;
+        private long inicio;                // inicio del contador
+        private long fin;                   // fin del contador
 
         public Clock(){
                 inicio = 0;
                 fin = 0;
-        }
-
-        public long getInicio() {
-                return inicio;
-        }
-
-        public void setInicio(long inicio) {
-                this.inicio = inicio;
-        }
-
-        public long getFin() {
-                return fin;
-        }
-
-        public void setFin(long fin) {
-                this.fin = fin;
         }
 
         /**
@@ -55,6 +38,22 @@ public class Clock {
          */
         public long eslapsedTime(){
                 return getFin() - getInicio();
+        }
+        
+        public long getInicio() {
+                return inicio;
+        }
+
+        public void setInicio(long inicio) {
+                this.inicio = inicio;
+        }
+
+        public long getFin() {
+                return fin;
+        }
+
+        public void setFin(long fin) {
+                this.fin = fin;
         }
 }  
 

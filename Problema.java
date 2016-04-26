@@ -5,7 +5,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 /**
- * @author Jorge
+ * @author Jorge Alonso Hernandez
  * E-mail: alu0100767803@ull.edu.es
  * Fecha: 19/04/2016
  * Asignatura: Diseño y Analisis de Algoritmos
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class Problema {
     
     private double[][] matrizCostes;        // Matriz con los costes de las aristas entre las ciudades
-    private int nNodos;            // Numero de ciudades del prolema
+    private int nNodos;                     // Numero de ciudades del prolema
     
     public Problema(String fichero) throws FileNotFoundException, IOException{
     
@@ -34,7 +34,6 @@ public class Problema {
                 }
             }
         }
-        reader.close();
     }
     
     /**
@@ -46,28 +45,6 @@ public class Problema {
                 System.out.print(getElemento(i, j) + " ");
             }
             System.out.println();
-        }
-    }
-    
-    public void actualizar(String fichero) throws FileNotFoundException, IOException{
-        setMatrizCostes(null);
-        setnNodos(0);
-        
-        BufferedReader reader = new BufferedReader(new FileReader(fichero));
-        String linea = reader.readLine();
-        nNodos = Integer.parseInt(linea);
-        matrizCostes = new double[nNodos][nNodos];
-        double valor;
-        
-        for(int i = 0; i < nNodos; i++){
-            for(int j = 0; j < nNodos; j++){
-                if(i != j && matrizCostes[i][j] == 0.0 && (linea = reader.readLine()) != null){
-                    String[] token = linea.split("\\s");
-                    valor = Double.parseDouble(token[0]);
-                    matrizCostes[j][i] = valor;
-                    matrizCostes[i][j] = valor;
-                }
-            }
         }
     }
     

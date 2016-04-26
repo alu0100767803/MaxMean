@@ -1,15 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package MaxMean;
 
 import java.util.*;
 
 /**
- *
- * @author Jorge
+ * @author Jorge Alonso Hernandez
+ * E-mail: alu0100767803@ull.edu.es
+ * Fecha: 19/04/2016
+ * Asignatura: Diseño y Analisis de Algoritmos
+ * Comentario: Clase que realiza el algoritmo de multiarranque (apartado d) de la practica)
  */
 public class Multiarranque extends Algoritmo{
     
@@ -17,38 +16,17 @@ public class Multiarranque extends Algoritmo{
         super(problema);
     }
     
+    /**
+     * Metodo que realiza el algoritmo del multiarranque
+     */
     public void ejecutar(){
-        /*Stack<Integer> pila = new Stack<Integer>();
-        ArrayList<Integer> s = solucionInicial();
-        mostrarArrayList(s);
-        ArrayList<Integer> s1 = new ArrayList<Integer>();
-        int nodoCandidato;
-        
-        for(int i = 0; i < s.size(); i++){
-            pila.push(s.get(i));
-            getSolucion().setVisitado(s.get(i), true);
-            getSolucion().setCoste(obtenerCoste(s));
-            getSolucion().setMd(md(s));
-        }
-        
-        while(true){
-            s1 = igualar(s);
-            nodoCandidato = (int) (Math.random() * getProblema().getnNodos());
-            
-            while(pila.contains(nodoCandidato)){
-                nodoCandidato = (int) (Math.random() * getProblema().getnNodos());
-               // System.out.println("Nodo candiadto" + nodoCandidato);
-            }
-            pila.push(nodoCandidato);
-            /*for(int i = 0; i < pila.size(); i++)
-                System.out.print(pila.get(i) + "");
-            System.out.println();
-        }*/
+       
         Stack<Integer> pila = new Stack<Integer>();
         ArrayList<Integer> s = solucionInicial();
         mostrarArrayList(s);
         ArrayList<Integer> s1 = new ArrayList<Integer>();
         int nodoCandidato;
+        int ejecucion = 0;
         
         for(int i = 0; i < s.size(); i++){
             pila.push(s.get(i));
@@ -57,10 +35,10 @@ public class Multiarranque extends Algoritmo{
             getSolucion().setMd(md(s));
         }
         
-        for(int i = 0; i < pila.size(); i++)
-                System.out.print(pila.get(i) + " ");
-        
         while(!sonIguales(s, s1)){
+            ejecucion++;
+            System.out.println("Ejecucion = " + ejecucion);
+            System.out.println("Md = " + md(s));
             s1 = igualar(s);
             nodoCandidato = (int) (Math.random() * getProblema().getnNodos());
  
@@ -81,10 +59,15 @@ public class Multiarranque extends Algoritmo{
                 
                 pila.push(nodoCandidato);
             }
+            getSolucion().setnEjecuciones(ejecucion);
             
         }
     }
     
+    /**
+     * Metodo que obtiene una solucion inicial con dos nodos aleatorios
+     * @return 
+     */
     public ArrayList<Integer> solucionInicial(){
         ArrayList<Integer> vector = new ArrayList<Integer>();
         Stack<Integer> pila = new Stack<Integer>();

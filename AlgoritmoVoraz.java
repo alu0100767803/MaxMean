@@ -4,7 +4,7 @@ package MaxMean;
 import java.util.ArrayList;
 
 /**
- * @author Jorge
+ * @author Jorge Alonso Hernandez
  * E-mail: alu0100767803@ull.edu.es
  * Fecha: 19/04/2016
  * Asignatura: Diseño y Analisis de Algoritmos
@@ -15,20 +15,26 @@ public class AlgoritmoVoraz extends Algoritmo{
     public AlgoritmoVoraz(Problema problema){
     
         super(problema);
-        for(int i = 0; i < getSolucion().getNodosVisitados().length; i++)
-            getSolucion().setVisitado(i, true);
-        
+        for(int i = 0; i < getSolucion().getNodosVisitados().length; i++)               // Se inicializa la solucion toda a true
+            getSolucion().setVisitado(i, true);                                         // es decir se parte de la solucion en la cual estan presentes todos los nodos
+                                                                                        // y se irán eliminando nodos si se mejora la solucion
     }
 
+    /**
+     * Metodo que va a ejecutar el algoritmo voraz
+     */
     public void ejecutar(){
     
         ArrayList<Integer> s = solucionInicial();
         ArrayList<Integer> s1 = new ArrayList<Integer>();
         int nodoCandidato;
-        
+        int ejecucion = 0;
         while(!sonIguales(s, s1)){
+            ejecucion++;  
+            System.out.println("Ejecucion = " + ejecucion);
+            System.out.println("Md = " + md(s));
             s1 = igualar(s);
-
+            
             nodoCandidato = nodoAEliminar(s);
 
             if(nodoCandidato != -1){
@@ -39,11 +45,14 @@ public class AlgoritmoVoraz extends Algoritmo{
                      getSolucion().setMd(md(s));
                  }
              }
-            
         }
-        
+       getSolucion().setnEjecuciones(ejecucion); 
     }
    
+    /**
+     * Metodo que obtiene una solucion inicial con todos los nodos del problema
+     * @return 
+     */
     public ArrayList<Integer> solucionInicial(){
         ArrayList<Integer> vector = new ArrayList<Integer>();
         for(int i = 0; i < getSolucion().getNodosVisitados().length; i++)
@@ -55,7 +64,7 @@ public class AlgoritmoVoraz extends Algoritmo{
     }
     
      /**
-     * Metodo que devuelve el nodo el cual es el que aporta un mayor md a la solucion existente
+     * Metodo que devuelve el nodo el cual al eliminarlo aporta un mayor md a la solucion
      * @param vector
      * @return 
      */
@@ -75,16 +84,6 @@ public class AlgoritmoVoraz extends Algoritmo{
                 }
                     
         }
-        /*for(int i = 0; i < getProblema().getnNodos(); i++){
-            if(!getSolucion().isVisitado(i)){
-                vector.add(i);
-                if(maxMd < md(vector)){
-                    maxMd = md(vector);
-                    nodo = i;
-                }
-                vector.remove(vector.size() - 1);
-            }
-        }*/
         return nodo;
         
     }

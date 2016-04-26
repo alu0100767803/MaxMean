@@ -5,7 +5,7 @@ package MaxMean;
 import java.util.*;
 
 /**
- * @author Jorge
+ * @author Jorge Alonso Hernandez
  * E-mail: alu0100767803@ull.edu.es
  * Fecha: 19/04/2016
  * Asignatura: Diseño y Analisis de Algoritmos
@@ -26,7 +26,11 @@ public class Grasp extends Algoritmo {
         getSolucion().setCoste(obtenerCoste(s));
         getSolucion().setMd(md(s));
         int nodoCandidato;
+        int ejecucion = 0; 
         while(!sonIguales(s, s1)){
+            ejecucion++;
+            System.out.println("Ejecucion = " + ejecucion);
+            System.out.println("Md = " + md(s));
             
              s1 = igualar(s);
              nodoCandidato = obtenerNodo(s);
@@ -41,6 +45,7 @@ public class Grasp extends Algoritmo {
                      s.remove(s.size() - 1);
              }
         }  
+        getSolucion().setnEjecuciones(ejecucion);
     }
    
     /**
@@ -50,30 +55,6 @@ public class Grasp extends Algoritmo {
      */
     public ArrayList<Integer> construirSolucion(){
         ArrayList<ArrayList<Integer>> vector = new ArrayList<ArrayList<Integer>>();         
-            
-            /*double valorActual = Double.NEGATIVE_INFINITY;
-            double MaxVal = Double.POSITIVE_INFINITY;
-            int nodo1 = -1;
-            int nodo2 = -1;
-            
-            for(int k = 0; k < 3; k++){
-                for(int i = 0; i < getProblema().getnNodos(); i++){
-                    for(int j = 0; j < getProblema().getnNodos(); j++){
-                        if(valorActual < getProblema().getElemento(i, j) && getProblema().getElemento(i, j) < MaxVal){
-                            nodo1 = i;
-                            nodo2 = j;
-                            valorActual = getProblema().getElemento(i, j);
-                        }
-                    }                   
-                }
-                    MaxVal = valorActual;
-                    System.out.println(nodo1 + "," + nodo2 + " valor = " + valorActual);
-                    valorActual = Double.NEGATIVE_INFINITY;
-                    ArrayList<Integer> aux = new ArrayList<Integer>();
-                    aux.add(nodo1);
-                    aux.add(nodo2);
-                    vector.add(aux);
-            }*/
             
             double MaxVal = Double.NEGATIVE_INFINITY;
             double MinVal = Double.POSITIVE_INFINITY;
@@ -107,11 +88,6 @@ public class Grasp extends Algoritmo {
             }
             
             int aleatorio = (int) (Math.random() * vector.size());
-            /*int k = 3;
-            for(int i = 0; i < k; i++){
-                aleatorio = (int) (Math.random()*vector.size());
-                
-            }*/
             return vector.get(aleatorio);
         
     }

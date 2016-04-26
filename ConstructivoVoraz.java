@@ -25,12 +25,12 @@ public class ConstructivoVoraz  extends Algoritmo{
         ArrayList<Integer> s1 = new ArrayList();
         int nodoCandidato;
         
-        int ejecucion = 0;      //
-        System.out.println("Ejecucion = " + ejecucion);
-        System.out.println("Md = " + md(s));
+        int ejecucion = 0;      
+        
         while(!sonIguales(s, s1)){
             ejecucion++;
-            getReloj().start();
+            System.out.println("Ejecucion = " + ejecucion);
+            System.out.println("Md = " + md(s));
             
              s1 = igualar(s);
              nodoCandidato = obtenerMaxMd(s);
@@ -42,11 +42,8 @@ public class ConstructivoVoraz  extends Algoritmo{
                      getSolucion().setMd(md(s));
                  }
              }
-             System.out.println("Ejecucion = " + ejecucion);
-             System.out.println("Md = " + md(s));
-             getReloj().stop();
-             // System.out.println("Tiempo = " + getReloj().eslapsedTime() + "milisegundos");
-        }  
+        } 
+        getSolucion().setnEjecuciones(ejecucion);
     }
     
     /**
@@ -72,8 +69,8 @@ public class ConstructivoVoraz  extends Algoritmo{
         getSolucion().setVisitado(nodo2, true);
         vector.add(nodo1);
         vector.add(nodo2);
-        getSolucion().setCoste(obtenerCoste(vector));       // Nuevo, comprobar su funcionamiento
-        getSolucion().setMd(md(vector));                    //
+        getSolucion().setCoste(obtenerCoste(vector));       
+        getSolucion().setMd(md(vector));                    
         
         return vector;
     }

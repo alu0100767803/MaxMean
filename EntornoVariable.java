@@ -5,17 +5,23 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 /**
- *
- * @author Jorge
+ * @author Jorge Alonso Hernandez
+ * E-mail: alu0100767803@ull.edu.es
+ * Fecha: 19/04/2016
+ * Asignatura: Diseño y Analisis de Algoritmos
+ * Comentario: Clase que realiza el algoritmo constructivo voraz (apartado e) de la practica)
  */
 public class EntornoVariable extends Algoritmo{
     
-    private final int kMax = 3;
+    private final int kMax = 3;                             // 
     
     public EntornoVariable(Problema problema){
         super(problema);
     }
     
+    /**
+     * Metodo que ejecuta el algoritmo de Busqueda de Entorno Variable
+     */
     public void ejecutar(){
         int k = 0;
         ArrayList<Integer> todosLosNodos = new ArrayList();
@@ -28,34 +34,32 @@ public class EntornoVariable extends Algoritmo{
         int nodoCandidato;
         int operacion;
         int nodoAEliminar;
+        int ejecucion = 0;
         
         while(k < getkMax()){
+            ejecucion++;
+            System.out.println("Ejecucion = " + ejecucion);
+            System.out.println("Md = " + md(s));
            s1 = igualar(s);
            vecinos = getVecinos(s);
            nodoCandidato = nodoAleatorio(vecinos);
            operacion = (int) (Math.random() * 3);
-            mostrarArrayList(s);
-            System.out.println();
-            mostrarArrayList(vecinos);
-           System.out.println();
-           if(operacion == 0){
-               s.add(nodoCandidato);
+           if(operacion == 0){                                                  // cuando operacion == 0, se procede a comprobar
+               s.add(nodoCandidato);                                            // si el md aumenta añadiendo un nuevo nodo aleatorio
                if(md(s) > md(s1)){
-                   System.out.println("Nodo a añadir = " + nodoCandidato);
                     getSolucion().setVisitado(nodoCandidato, true);
                     getSolucion().setCoste(obtenerCoste(s));
                     getSolucion().setMd(md(s));
                     k = 0;
-                    System.out.println("Estoy añadiendo");
                }
                else{
                   k++;
                   s.remove(s.size() - 1);
                }
            }
-           else if(operacion == 1){
-               nodoAEliminar = (int) (Math.random() * s.size() - 1);
-               System.out.println("Nodo a eliminar = " + s.get(nodoAEliminar));
+           else if(operacion == 1){                                             // cuando operacion == 1, se procede a comprobar
+               nodoAEliminar = (int) (Math.random() * s.size() - 1);            // si el md aumenta intercambiando un nodo de la solucion
+                                                                                // por otro aleatorio
                s.remove(nodoAEliminar);
                s.add(nodoCandidato);
                if(md(s) > md(s1)){
@@ -65,76 +69,51 @@ public class EntornoVariable extends Algoritmo{
                   getSolucion().setCoste(obtenerCoste(s));
                   getSolucion().setMd(md(s)); 
                   k = 0;
-                  System.out.println("Estoy intercambiando");
-                  
                }
                else{
                    k++;
                    s = igualar(s1);
                }
            }
-           else if(operacion == 2){
-               nodoAEliminar = (int) (Math.random() * s.size() - 1);
+           else if(operacion == 2){                                             // cuando operacion == 2, se procede a comprobar
+               nodoAEliminar = (int) (Math.random() * s.size() - 1);            // si el md mejora eliminando un nodo de la solucion
                s.remove(nodoAEliminar);
                if(md(s) > md(s1)){
                    getSolucion().setVisitado(nodoAEliminar, false);
                    getSolucion().setCoste(obtenerCoste(s));
                    getSolucion().setMd(md(s));
                    k = 0;
-                   System.out.println("Estoy eliminando");
                }
                else{
                    k++;
                    s = igualar(s1);
                }
            }
-           
-           /*if(nodoCandidato != -1){
-               s1.add(nodoCandidato);
-               if(md(s1) > md(s)){
-                   s = igualar(s1);
-                   k = 0;
-               }
-               else
-                   k++;
-               
-           }*/
-            
-          
         }
+        getSolucion().setnEjecuciones(ejecucion);
         
         for(int i = 0; i < s.size(); i++)
             getSolucion().setVisitado(s.get(i), true);
         getSolucion().setCoste(obtenerCoste(s));
         getSolucion().setMd(md(s));
-        
-        /*while(k < getkMax() || !sonIguales(s, s1)){
-            s1 = igualar(s);
-            
-            nodoCandidato = (int) (Math.random() * getProblema().getnNodos());
-            while(pila.size() < getProblema().getnNodos() && pila.contains(nodoCandidato)){
-                nodoCandidato = (int) (Math.random() * getProblema().getnNodos());
-            }
-            
-            s.add(nodoCandidato);
-            if(md(s) > md(s1)){
-                getSolucion().setVisitado(nodoCandidato, true);
-                getSolucion().setCoste(obtenerCoste(s));
-                getSolucion().setMd(md(s));
-            }
-            else 
-                pila.remove(s.size() - 1);
-            
-            
-        }*/
     }
      
+    /**
+     * Metodo que devuelve un nodo aleatorio del ArrayList
+     * @param vector
+     * @return 
+     */
     public int nodoAleatorio(ArrayList<Integer> vector){
         int aleatorio = (int) (Math.random() * vector.size() - 1);
         return vector.get(aleatorio);
         
     }
     
+    /**
+     * Metodo que devuelve un ArrayList con dos nodos aleatorios que conformaran la solucion inicial
+     * @param vector
+     * @return 
+     */
     public ArrayList<Integer> aleatorio(ArrayList<Integer> vector){
         
         ArrayList<Integer> aux = new ArrayList<Integer>();
@@ -176,8 +155,8 @@ public class EntornoVariable extends Algoritmo{
         getSolucion().setVisitado(nodo2, true);
         vector.add(nodo1);
         vector.add(nodo2);
-        getSolucion().setCoste(obtenerCoste(vector));       // Nuevo, comprobar su funcionamiento
-        getSolucion().setMd(md(vector));                    //
+        getSolucion().setCoste(obtenerCoste(vector));       
+        getSolucion().setMd(md(vector));                    
         
         return vector;
     }
