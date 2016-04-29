@@ -43,6 +43,7 @@ public class MaxMean {
             System.out.println("5. Busqueda por Entorno Variable");
             System.out.println("6. Mostrar todos");
             System.out.println("7. Salir");
+            System.out.println("8. Hibrido");
             System.out.print("Introducir opcion: ");
             opcion = entrada.nextInt();
             System.out.println();
@@ -111,6 +112,14 @@ public class MaxMean {
                         break;
                     case 7: System.out.println("Saliendo...");
                             exit(0);
+                        break;
+                    case 8: algoritmo = new Hibrido(problema);
+                        reloj.start();
+                        algoritmo.ejecutar();
+                        reloj.stop();
+                        algoritmo.mostrar();
+                        System.out.println("Tiempo = " + reloj.eslapsedTime() + " milisegundos");
+                        System.out.println();
                         break;
                     default: System.out.println("Opcion incorrecta");
                              System.out.println("Pruebe con valores en el rango [1-6]");
